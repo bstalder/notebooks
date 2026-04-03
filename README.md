@@ -23,4 +23,18 @@ earlyoperations - summit/operations exploratory analyses, including:
 - Corrected image-quality cut accounting to report true step-by-step removals.
 - Set eff_time_zero_point_scale_median as a minimum-threshold cut
 	(keep rows with scale >= zp_scale_min).
+- Added ESS integration in
+	earlyoperations/Mirror_Reflectivity_Scattering_Exploration.ipynb
+	for environmental context on M1M3 scattering trends.
+- Added PM analyses using
+	lsst.sal.ESS.particleMeasurements (salIndex 127/128/129),
+	including total particle count from numberConcentration0-4.
+- Added humidity analyses using
+	lsst.sal.ESS.relativeHumidity.relativeHumidityItem
+	with salIndex=113.
+- Added turbulence and wind correlation studies for PM totals and
+	scattering, including:
+	- inside wind (ESS.airTurbulence; median across 5 sensors)
+	- outside wind (ESS.airFlow index 301)
+	- all-data and night+dome-open subsets.
 
