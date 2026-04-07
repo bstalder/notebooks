@@ -37,4 +37,21 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- inside wind (ESS.airTurbulence; median across 5 sensors)
 	- outside wind (ESS.airFlow index 301)
 	- all-data and night+dome-open subsets.
+- Added Optical_Motion_Guider_Drift_RMS_Diagnosis.ipynb in
+	earlyoperations/ for guider-based mount and rotator motion diagnostics,
+	including:
+	- Per-night and per-exposure guider drift and detrended RMS metrics
+	  (altitude, azimuth, focal-plane rotator) over 107 nights / 35,720
+	  science exposures (2025-Oct through 2026-Apr).
+	- MTAOS correction-type flag breakdown (hexapod, mount tracking drift,
+	  mount optical movement, rotator tracking drift, rotator movement)
+	  with paneled nightly histograms.
+	- Scatter plots of detrended altitude/azimuth RMS vs guider and
+	  PSF-star delta ellipticity (e1/e2), filtered to no-hexapod-correction
+	  exposures.
+	- ConsDB ellipticity schema exploration confirming only guider_e1_mean /
+	  guider_e2_mean are available as simple (non-delta) ellipticity columns.
+	- Histograms of mount drift magnitude, mount detrended RMS magnitude,
+	  rotator drift, and rotator detrended RMS under no-hexapod-correction
+	  guard.
 
