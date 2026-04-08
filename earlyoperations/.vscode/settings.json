@@ -11,6 +11,14 @@
         "git -C /sdf/home/s/stalder/notebooks/bstalder-repo": true,
         "mv": true,
         "cp": true,
-        "jupyter": true
+        "jupyter": true,
+        "/^python3 -c \"\nimport json\nwith open\\('/sdf/home/s/stalder/notebooks/bstalder-repo/earlyoperations/Optical_Motion_Guider_Drift_RMS_Diagnosis\\.ipynb'\\) as f:\n    nb = json\\.load\\(f\\)\nfor i, cell in enumerate\\(nb\\['cells'\\]\\):\n    src = ''\\.join\\(cell\\.get\\('source', \\[\\]\\)\\)\n    if \\\\\"df_motion\\['mtaos_hexapod_correction'\\] = False\\\\\" in src or \\\\\"df_motion\\['mtaos_hexapod_correction'\\] = corr_flag\\\\\" in src:\n        print\\(f'Cell \\{i\\+1\\} id=\\{cell\\[\\\\\"id\\\\\"\\]\\}: first 80 chars: \\{src\\[:120\\]!r\\}'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 -c \"\nimport json\nwith open\\('/sdf/home/s/stalder/notebooks/bstalder-repo/earlyoperations/Optical_Motion_Guider_Drift_RMS_Diagnosis\\.ipynb'\\) as f:\n    nb = json\\.load\\(f\\)\n# Also check what cells need to run before cell 61 - find motion scoring cell\nfor i in \\[13, 14, 60\\]:\n    cell = nb\\['cells'\\]\\[i\\]\n    src = ''\\.join\\(cell\\.get\\('source', \\[\\]\\)\\)\n    print\\(f'Cell \\{i\\+1\\} id=\\{cell\\[\\\\\"id\\\\\"\\]\\}: \\{src\\[:100\\]!r\\}'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }
