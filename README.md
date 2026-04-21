@@ -54,4 +54,15 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- Histograms of mount drift magnitude, mount detrended RMS magnitude,
 	  rotator drift, and rotator detrended RMS under no-hexapod-correction
 	  guard.
+- Added ESS_Inside_vs_Outside_Wind_DomeClosed_AHUOff.ipynb in
+	earlyoperations/ for dome wind-blocking and air-infiltration analysis,
+	including:
+	- Inside wind (median of 5 ESS.airTurbulence sensors) vs outside wind
+	  (ESS.airFlow index 301), filtered to dome-shutters-closed +
+	  louvers-closed + HVAC AHUs-off periods.
+	- Dome wind-blocking efficiency time series with 30-min rolling median
+	  (~94% median efficiency over the 4-week study period 2026-Feb/Mar).
+	- Azimuth perimeter gap air-leak rate Q(t) via the orifice equation,
+	  using ESS pressure differential (indices 301 outside / 113 inside),
+	  detrended for the static sensor offset; median |Q| ≈ 9 m³/s.
 
