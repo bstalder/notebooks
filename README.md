@@ -13,6 +13,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 - Wind, dome-pointing, and image-quality trend studies.
 - Quality-cut diagnostics for AOS residual FWHM and
 	eff_time_zero_point_scale_median thresholding.
+- Per-corner-sensor Zernike coefficient time series from MTAOS EFD events.
 
 ## Recent updates
 
@@ -54,6 +55,16 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- Histograms of mount drift magnitude, mount detrended RMS magnitude,
 	  rotator drift, and rotator detrended RMS under no-hexapod-correction
 	  guard.
+- Added MTAOS_WavefrontError_Zernikes.ipynb in
+	earlyoperations/ for per-corner-sensor Zernike coefficient time series,
+	including:
+	- EFD query of lsst.sal.MTAOS.logevent_wavefrontError for a single night,
+	  fetching nollZernikeValues0–24 (Noll Z4–Z28) for all four corner
+	  wavefront sensors (R00/R04/R40/R44, sensorIds 191/195/199/203).
+	- Per-sensor Z4 (defocus) stacked time series with median overlay.
+	- All-sensors overlaid single-axis Z4 plot for cross-sensor comparison.
+	- Multi-mode grid plot (Z4 defocus, Z5/6 astigmatism, Z7/8 coma,
+	  Z11 spherical) × sensor for a full-night overview.
 - Added ESS_Inside_vs_Outside_Wind_DomeClosed_AHUOff.ipynb in
 	earlyoperations/ for dome wind-blocking and air-infiltration analysis,
 	including:
