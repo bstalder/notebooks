@@ -14,6 +14,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 - Quality-cut diagnostics for AOS residual FWHM and
 	eff_time_zero_point_scale_median thresholding.
 - Per-corner-sensor Zernike coefficient time series from MTAOS EFD events.
+- Dome HVAC daytime thermal conditioning and nighttime mirror thermal tracking.
 
 ## Recent updates
 
@@ -76,4 +77,22 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- Azimuth perimeter gap air-leak rate Q(t) via the orifice equation,
 	  using ESS pressure differential (indices 301 outside / 113 inside),
 	  detrended for the static sensor offset; median |Q| ≈ 9 m³/s.
+- Added HVAC_DaytimeThermalConditioning.ipynb in
+	earlyoperations/ for dome HVAC daytime pre-conditioning performance, including:
+	- Single-night and multi-night overlay plots of ΔT = T_interior − T_ambient
+	  vs hours relative to evening nautical twilight (t₀).
+	- 12-month time series of ΔT at t₀ (May 2025–May 2026) over 211 qualifying
+	  nights; median ΔT = −0.08 °C, indicating excellent average conditioning.
+	- Before/after louver commissioning comparison (split at Oct 20 / Nov 27, 2025):
+	  night-to-night scatter halved (σ: 1.50 → 0.77 °C) after louver installation.
+	- AHU topic-name cutover handling (old lowerAHU* topics before 2026-04-22,
+	  new airHandlingUnit*Dome topics afterward).
+- Added Mirror_Thermal_Tracking.ipynb in
+	earlyoperations/ for nighttime mirror thermal tracking, including:
+	- Single-night two-panel plot: ΔT = T_air(ESS:113) − T_mirror(ESS:115
+	  temperatureItem10) and absolute temperatures vs hours after t₀.
+	- 8-week multi-night overlay (Mar–May 2026, ~55 nights) with median,
+	  IQR, and 10–90th percentile envelope; nights colour-coded by ΔT at t₀.
+	- Performance summary: median ΔT at t₀ = +1.23 °C; 83% of nights within
+	  target band (−1 to +2 °C) at dome opening.
 
