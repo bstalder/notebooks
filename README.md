@@ -95,4 +95,15 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  IQR, and 10–90th percentile envelope; nights colour-coded by ΔT at t₀.
 	- Performance summary: median ΔT at t₀ = +1.23 °C; 83% of nights within
 	  target band (−1 to +2 °C) at dome opening.
+- Added VisitDetectorTable_PSF_FocalPlane.ipynb in
+	earlyoperations/ for PSF size across the LSSTCam focal plane using the
+	butler visit_detector_table dataset from LSSTCam/runs/DRP/DP2, including:
+	- Full-collection load (10.1M rows, 28,613 visits, 180 science detectors,
+	  all 6 bands u/g/r/i/z/y) via two pre-aggregated monolithic tables.
+	- Per-detector PSF FWHM statistics (median, IQR, min, max) across all
+	  visits and bands combined.
+	- Focal-plane maps (side-by-side colour plots) of median PSF FWHM and
+	  IQR per detector, overlaid on camera geometry from the butler.
+	- Summary: overall median PSF FWHM = 1.170 arcsec; detector-to-detector
+	  spread σ = 0.012 arcsec; visit-to-visit IQR per detector ≈ 0.38 arcsec.
 
