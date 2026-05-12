@@ -1,0 +1,19 @@
+# Large data files
+*.parquet
+*.csv.gz
+*.h5
+*.hdf5
+*.fits
+*.fits.gz
+
+# Environment / secrets
+.env
+*-credentials.txt
+
+# PDFs (generated figures)
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
