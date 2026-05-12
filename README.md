@@ -106,4 +106,25 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  IQR per detector, overlaid on camera geometry from the butler.
 	- Summary: overall median PSF FWHM = 1.170 arcsec; detector-to-detector
 	  spread σ = 0.012 arcsec; visit-to-visit IQR per detector ≈ 0.38 arcsec.
+- Added ThermalDifferential_PSF_Impact.ipynb in
+	earlyoperations/ for temperature-differential effects on science image
+	quality (mid-Apr 2025 – May 2026, 73,149 LSSTCam science exposures), including:
+	- EFD fetches for inside dome temperature sensors (ESS:111/112/113 at
+	  telescope-mounted locations), ESS:110 air-turbulence sensor, and
+	  ESS:301 outside weather station wind and temperature.
+	- ESS:114-117 mirror glass temperature arrays (4 × 16 = 64 sensors);
+	  per-unit medians and bulk glass_temp_bulk / glass_temp_spread.
+	- Elevation-based height correction for ESS:111-113 sensors that move
+	  with the telescope (sin/cos decomposition; DOME_LAPSE_RATE = 0.0098 °C/m).
+	- ConsDB join (±5 min tolerance) delivering psf_sigma_median, donut_blur,
+	  and aos_fwhm per exposure; quality cuts (aos_fwhm < 0.75 arcsec,
+	  eff_time_zero_point_scale_median ≥ 0.75, no y-band) → 54,471 exposures.
+	- ΔT columns: inside−outside, intra-dome gradient (111−113, 112−113),
+	  and glass−air (glass_temp_bulk − inside_temp_113).
+	- Time-series overview, scatter plots of all ΔT metrics vs PSF σ / donut
+	  blur / AOS FWHM, binned ΔT box+bar analyses for both inside−outside
+	  and glass−air differentials, correlation matrix (Spearman), and
+	  per-metric summary table.
+	- Parquet exports of the full joined dataset (73,149 × 69 cols) and the
+	  quality-cut subset (54,471 × 69 cols).
 
