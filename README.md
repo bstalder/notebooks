@@ -87,6 +87,10 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  night-to-night scatter halved (σ: 1.50 → 0.77 °C) after louver installation.
 	- AHU topic-name cutover handling (old lowerAHU* topics before 2026-04-22,
 	  new airHandlingUnit*Dome topics afterward).
+	- AHU outage-duration effect analysis (111 dome-open nights, Nov 27 2025–present):
+	  scatter + rolling median of ΔT vs max contiguous AHU-off run, binned
+	  box plot (bins 0–0.5/0.5–1/1–2/2–4/≥4 h), and 2-D hexbin density;
+	  Spearman r = +0.28 (longer outages → warmer interior at dome-open).
 - Added Mirror_Thermal_Tracking.ipynb in
 	earlyoperations/ for nighttime mirror thermal tracking, including:
 	- Single-night two-panel plot: ΔT = T_air(ESS:113) − T_mirror(ESS:115
