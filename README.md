@@ -131,4 +131,16 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  per-metric summary table.
 	- Parquet exports of the full joined dataset (73,149 × 69 cols) and the
 	  quality-cut subset (54,471 × 69 cols).
+- Added twilight_forecast_history.ipynb in
+	earlyoperations/ (authors: Brian Brondel, B. Stalder) for tracking how
+	WeatherForecast.hourlyTrend temperature predictions evolve over time, including:
+	- EFD query of lsst.sal.WeatherForecast.hourlyTrend over a configurable
+	  rolling window (default: past 8 hours).
+	- Per-issuance computation of the next end-of-evening nautical twilight
+	  time (sun altitude = −12°) via Astropy solar-altitude solver + Brent's method.
+	- Interpolation of each forecast's temperature grid at the predicted
+	  twilight moment, replicating WeatherForecastModel.predict_temperature_at_time.
+	- Time series plot of predicted twilight temperature vs. forecast
+	  publication time, showing how the model's estimate converges (or drifts)
+	  as successive forecasts are issued throughout the day.
 
