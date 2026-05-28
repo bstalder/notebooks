@@ -131,6 +131,18 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  per-metric summary table.
 	- Parquet exports of the full joined dataset (73,149 × 69 cols) and the
 	  quality-cut subset (54,471 × 69 cols).
+- Added engineering/GlycolLine_PressureDrop_Diagnosis.ipynb in
+	earlyoperations/ for diagnosing a glycol line blockage, including:
+	- Pressure differential ΔP = P_pier − P_chiller (bar) over a 90-day window,
+	  combining MTMount pier sensor (lsst.sal.MTMount.cooling /
+	  glycolPressurePier0101, bar) and MTCamera MAQ20 chiller supply pressure
+	  (lsst.MTCamera Kafka db / chiller_maq20 / GlycSupplyP, PSI → bar).
+	- Chiller switch annotation (~Apr 7 2026): ΔP sign flip from −1 bar (old
+	  chiller) to +0.65 bar baseline (new chiller) clearly visible.
+	- Blockage event (May 3–10 2026): ΔP escalates to +3.16 bar peak,
+	  recovering to ~+0.87 bar after intervention.
+	- Two-panel plot (absolute pressures + ΔP with 6-h rolling median) and
+	  weekly ΔP summary table.
 - Added twilight_forecast_history.ipynb in
 	earlyoperations/ (authors: Brian Brondel, B. Stalder) for tracking how
 	WeatherForecast.hourlyTrend temperature predictions evolve over time, including:
