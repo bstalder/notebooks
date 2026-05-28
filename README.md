@@ -8,13 +8,17 @@ eotesting - raft-scale analyses and investigative processes
 
 vandv - first pass at verification tests for integration activities
 
-earlyoperations - summit/operations exploratory analyses, including:
-- ConsDB and EFD join workflows for LSSTCam science exposures.
-- Wind, dome-pointing, and image-quality trend studies.
-- Quality-cut diagnostics for AOS residual FWHM and
-	eff_time_zero_point_scale_median thresholding.
-- Per-corner-sensor Zernike coefficient time series from MTAOS EFD events.
-- Dome HVAC daytime thermal conditioning and nighttime mirror thermal tracking.
+earlyoperations - summit/operations exploratory analyses, organized into:
+- **thermal/** – Mirror thermal tracking, HVAC daytime conditioning,
+	thermal-differential PSF impact, and twilight temperature forecasting.
+- **dome_and_wind/** – Wind vs dome-pointing turbulence correlations,
+	dome-closed wind-blocking efficiency, and dome airflow estimation.
+- **optical_psf/** – ConsDB+EFD PSF diagnostics, guider drift/motion RMS,
+	MTAOS wavefront-error Zernikes, focal-plane PSF maps, and mirror
+	reflectivity/scattering exploration.
+- **engineering/** – Glycol line pressure-drop blockage diagnosis.
+- **exploration/** – Early EFD/ESS telemetry exploration notebooks.
+- **data/** – Shared parquet caches, CSV reference tables, and generated PDFs.
 
 ## Recent updates
 
@@ -26,7 +30,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 - Set eff_time_zero_point_scale_median as a minimum-threshold cut
 	(keep rows with scale >= zp_scale_min).
 - Added ESS integration in
-	earlyoperations/Mirror_Reflectivity_Scattering_Exploration.ipynb
+	earlyoperations/optical_psf/Mirror_Reflectivity_Scattering_Exploration.ipynb
 	for environmental context on M1M3 scattering trends.
 - Added PM analyses using
 	lsst.sal.ESS.particleMeasurements (salIndex 127/128/129),
@@ -40,7 +44,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- outside wind (ESS.airFlow index 301)
 	- all-data and night+dome-open subsets.
 - Added Optical_Motion_Guider_Drift_RMS_Diagnosis.ipynb in
-	earlyoperations/ for guider-based mount and rotator motion diagnostics,
+	earlyoperations/optical_psf/ for guider-based mount and rotator motion diagnostics,
 	including:
 	- Per-night and per-exposure guider drift and detrended RMS metrics
 	  (altitude, azimuth, focal-plane rotator) over 107 nights / 35,720
@@ -57,7 +61,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  rotator drift, and rotator detrended RMS under no-hexapod-correction
 	  guard.
 - Added MTAOS_WavefrontError_Zernikes.ipynb in
-	earlyoperations/ for per-corner-sensor Zernike coefficient time series,
+	earlyoperations/optical_psf/ for per-corner-sensor Zernike coefficient time series,
 	including:
 	- EFD query of lsst.sal.MTAOS.logevent_wavefrontError for a single night,
 	  fetching nollZernikeValues0–24 (Noll Z4–Z28) for all four corner
@@ -67,7 +71,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- Multi-mode grid plot (Z4 defocus, Z5/6 astigmatism, Z7/8 coma,
 	  Z11 spherical) × sensor for a full-night overview.
 - Added ESS_Inside_vs_Outside_Wind_DomeClosed_AHUOff.ipynb in
-	earlyoperations/ for dome wind-blocking and air-infiltration analysis,
+	earlyoperations/dome_and_wind/ for dome wind-blocking and air-infiltration analysis,
 	including:
 	- Inside wind (median of 5 ESS.airTurbulence sensors) vs outside wind
 	  (ESS.airFlow index 301), filtered to dome-shutters-closed +
@@ -78,7 +82,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  using ESS pressure differential (indices 301 outside / 113 inside),
 	  detrended for the static sensor offset; median |Q| ≈ 9 m³/s.
 - Added HVAC_DaytimeThermalConditioning.ipynb in
-	earlyoperations/ for dome HVAC daytime pre-conditioning performance, including:
+	earlyoperations/thermal/ for dome HVAC daytime pre-conditioning performance, including:
 	- Single-night and multi-night overlay plots of ΔT = T_interior − T_ambient
 	  vs hours relative to evening nautical twilight (t₀).
 	- 12-month time series of ΔT at t₀ (May 2025–May 2026) over 211 qualifying
@@ -92,7 +96,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  box plot (bins 0–0.5/0.5–1/1–2/2–4/≥4 h), and 2-D hexbin density;
 	  Spearman r = +0.28 (longer outages → warmer interior at dome-open).
 - Added Mirror_Thermal_Tracking.ipynb in
-	earlyoperations/ for nighttime mirror thermal tracking, including:
+	earlyoperations/thermal/ for nighttime mirror thermal tracking, including:
 	- Single-night two-panel plot: ΔT = T_air(ESS:113) − T_mirror(ESS:115
 	  temperatureItem10) and absolute temperatures vs hours after t₀.
 	- 8-week multi-night overlay (Mar–May 2026, ~55 nights) with median,
@@ -100,7 +104,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- Performance summary: median ΔT at t₀ = +1.23 °C; 83% of nights within
 	  target band (−1 to +2 °C) at dome opening.
 - Added VisitDetectorTable_PSF_FocalPlane.ipynb in
-	earlyoperations/ for PSF size across the LSSTCam focal plane using the
+	earlyoperations/optical_psf/ for PSF size across the LSSTCam focal plane using the
 	butler visit_detector_table dataset from LSSTCam/runs/DRP/DP2, including:
 	- Full-collection load (10.1M rows, 28,613 visits, 180 science detectors,
 	  all 6 bands u/g/r/i/z/y) via two pre-aggregated monolithic tables.
@@ -111,7 +115,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- Summary: overall median PSF FWHM = 1.170 arcsec; detector-to-detector
 	  spread σ = 0.012 arcsec; visit-to-visit IQR per detector ≈ 0.38 arcsec.
 - Added ThermalDifferential_PSF_Impact.ipynb in
-	earlyoperations/ for temperature-differential effects on science image
+	earlyoperations/thermal/ for temperature-differential effects on science image
 	quality (mid-Apr 2025 – May 2026, 73,149 LSSTCam science exposures), including:
 	- EFD fetches for inside dome temperature sensors (ESS:111/112/113 at
 	  telescope-mounted locations), ESS:110 air-turbulence sensor, and
@@ -131,8 +135,8 @@ earlyoperations - summit/operations exploratory analyses, including:
 	  per-metric summary table.
 	- Parquet exports of the full joined dataset (73,149 × 69 cols) and the
 	  quality-cut subset (54,471 × 69 cols).
-- Added engineering/GlycolLine_PressureDrop_Diagnosis.ipynb in
-	earlyoperations/ for diagnosing a glycol line blockage, including:
+- Added GlycolLine_PressureDrop_Diagnosis.ipynb in
+	earlyoperations/engineering/ for diagnosing a glycol line blockage, including:
 	- Pressure differential ΔP = P_pier − P_chiller (bar) over a 90-day window,
 	  combining MTMount pier sensor (lsst.sal.MTMount.cooling /
 	  glycolPressurePier0101, bar) and MTCamera MAQ20 chiller supply pressure
@@ -144,7 +148,7 @@ earlyoperations - summit/operations exploratory analyses, including:
 	- Two-panel plot (absolute pressures + ΔP with 6-h rolling median) and
 	  weekly ΔP summary table.
 - Added twilight_forecast_history.ipynb in
-	earlyoperations/ (authors: Brian Brondel, B. Stalder) for tracking how
+	earlyoperations/thermal/ (authors: Brian Brondel, B. Stalder) for tracking how
 	WeatherForecast.hourlyTrend temperature predictions evolve over time, including:
 	- EFD query of lsst.sal.WeatherForecast.hourlyTrend over a configurable
 	  rolling window (default: past 8 hours).
