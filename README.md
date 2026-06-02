@@ -22,27 +22,24 @@ earlyoperations - summit/operations exploratory analyses, organized into:
 
 ## Recent updates
 
-- Expanded ConsDB quicklook fetches to include
-	eff_time_zero_point_scale_median.
-- Added pre-cut distribution histograms for
-	eff_time_zero_point_scale_median and aos_fwhm.
-- Corrected image-quality cut accounting to report true step-by-step removals.
-- Set eff_time_zero_point_scale_median as a minimum-threshold cut
-	(keep rows with scale >= zp_scale_min).
-- Added ESS integration in
-	earlyoperations/optical_psf/Mirror_Reflectivity_Scattering_Exploration.ipynb
-	for environmental context on M1M3 scattering trends.
-- Added PM analyses using
-	lsst.sal.ESS.particleMeasurements (salIndex 127/128/129),
-	including total particle count from numberConcentration0-4.
-- Added humidity analyses using
-	lsst.sal.ESS.relativeHumidity.relativeHumidityItem
-	with salIndex=113.
-- Added turbulence and wind correlation studies for PM totals and
-	scattering, including:
-	- inside wind (ESS.airTurbulence; median across 5 sensors)
-	- outside wind (ESS.airFlow index 301)
-	- all-data and night+dome-open subsets.
+- Refreshed thermal and guider-drift notebooks (2026-06):
+	- ThermalDifferential_PSF_Impact.ipynb: added section 14 "PSF vs DIMM —
+	  Atmospheric + Dome Excess" decomposing science PSF into the
+	  free-atmosphere (DIMM) and dome/optics excess components.
+	- Optical_Motion_Guider_Drift_RMS_Diagnosis.ipynb: added a ConsDB
+	  ellipticity schema exploration cell and an explicit ellipticity vs
+	  guider-drift scatter panel.
+	- HVAC_DaytimeThermalConditioning, Mirror_Thermal_Tracking, and
+	  twilight_forecast_history: refreshed with current EFD data.
+- Earlier ConsDB / ESS exploration work (consolidated):
+	- ConsDB quicklook fetches expanded to include
+	  eff_time_zero_point_scale_median; pre-cut histograms and corrected
+	  step-by-step quality-cut accounting.
+	- ESS environmental integrations in
+	  earlyoperations/optical_psf/Mirror_Reflectivity_Scattering_Exploration.ipynb,
+	  including particle measurements (salIndex 127/128/129), humidity
+	  (salIndex 113), and inside/outside wind correlations vs PM totals
+	  and scattering trends.
 - Added Optical_Motion_Guider_Drift_RMS_Diagnosis.ipynb in
 	earlyoperations/optical_psf/ for guider-based mount and rotator motion diagnostics,
 	including:
