@@ -22,6 +22,17 @@ earlyoperations - summit/operations exploratory analyses, organized into:
 
 ## Recent updates
 
+- Added MTAOS_Z4_Focus_Trends.ipynb in earlyoperations/optical_psf/ for
+  nightly Z4 (focus/defocus) trends and AOS FWHM correlation, including:
+  - EFD query of `lsst.sal.MTAOS.logevent_wavefrontError` for Z4
+    (`nollZernikeValues0`, µm) from the four corner wavefront sensors
+    (R00/R04/R40/R44) joined to ConsDB `visit1_quicklook` via `visitId`.
+  - Nightly median Z4 timeline with IQR envelope and per-sensor tracks
+    showing long-term focus trends across the observing season.
+  - Nightly Z4 RMS (intra-night spread) to identify nights with poor
+    focus stability.
+  - Exposure-level Z4 vs `aos_fwhm` density scatter (corner-sensor
+    average defocus vs AOS-delivered image FWHM).
 - Refreshed thermal and guider-drift notebooks (2026-06):
 	- ThermalDifferential_PSF_Impact.ipynb: added section 14 "PSF vs DIMM —
 	  Atmospheric + Dome Excess" decomposing science PSF into the
