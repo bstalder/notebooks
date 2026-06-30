@@ -5,6 +5,7 @@
 *.hdf5
 *.fits
 *.fits.gz
+*.bsp
 
 # Environment / secrets
 .env
