@@ -20,8 +20,23 @@ earlyoperations - summit/operations exploratory analyses, organized into:
 - **exploration/** – Early EFD/ESS telemetry exploration notebooks.
 - **data/** – Shared parquet caches, CSV reference tables, and generated PDFs.
 
+satellites - satellite-in-Rubin-imaging studies (GEO brightness, calibration analogs).
+
 ## Recent updates
 
+- Added ASCENT_GEO_Brightness_Exploration.ipynb in satellites/ studying the
+  GEO satellite ASCENT (NORAD 51287, a 12U CubeSat) as a size-analog for the
+  proposed Landolt artificial calibration star, including:
+  - Visibility/drift analysis and ConsDB FoV cross-match for LSSTCam science
+    exposures; trail photometry from DP2 `preliminary_visit_image` data.
+  - ASCENT comes out undetected (3σ upper limit AB ~21.6 even stacked),
+    confirmed physical against a bright-satellite validation on GOES-19.
+  - Section 12b: absolute flux calibration of the GOES-19 along-trail light
+    curve to physical units, anchored to the validated full-trail PhotoCalib
+    brightness (AB 11.67 = 77.8 mJy, i-band) rather than the per-row trailed
+    sum. Reports mean flux density, in-band energy/photon flux, and the
+    intrinsic glint modulation (7.3% raw / 1.8% smoothed RMS, 2.20 mag p-p),
+    with a Landolt flux-scaling anchor f_ν(AB) = 78 mJy × 10^[-(AB-11.67)/2.5].
 - Added MTAOS_Z4_Focus_Trends.ipynb in earlyoperations/optical_psf/ for
   nightly Z4 (focus/defocus) trends and AOS FWHM correlation, including:
   - EFD query of `lsst.sal.MTAOS.logevent_wavefrontError` for Z4
