@@ -6,6 +6,7 @@
 *.fits
 *.fits.gz
 *.bsp
+*.npz
 
 # Environment / secrets
 .env

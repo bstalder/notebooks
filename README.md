@@ -31,6 +31,11 @@ satellites - satellite-in-Rubin-imaging studies (GEO brightness, calibration ana
     exposures; trail photometry from DP2 `preliminary_visit_image` data.
   - ASCENT comes out undetected (3σ upper limit AB ~21.6 even stacked),
     confirmed physical against a bright-satellite validation on GOES-19.
+  - Section 13: second-epoch confirmation using the `main` repo's prompt
+    single-frame products (DP2 covers only July 2025). Re-runs the star-masked
+    trail photometry and stacking on the six processed 2026 FoV crossings
+    (2 bands, 3 nights); ASCENT is undetected in all, with the deeper
+    2026-05-24 i-band stack (N=3181 clean columns) giving 3σ AB ~20.1.
   - Section 12b: absolute flux calibration of the GOES-19 along-trail light
     curve to physical units, anchored to the validated full-trail PhotoCalib
     brightness (AB 11.67 = 77.8 mJy, i-band) rather than the per-row trailed
