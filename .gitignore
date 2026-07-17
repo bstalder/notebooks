@@ -15,6 +15,9 @@
 # PDFs (generated figures)
 *.pdf
 
+# Generated Z4 figures (regenerable from MTAOS_Z4_Focus_Trends.ipynb)
+earlyoperations/optical_psf/z4_*.png
+
 # Python
 __pycache__/
 *.pyc
