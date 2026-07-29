@@ -2,12 +2,14 @@
 camera/M2 hexapod focus. T614 is a cwfs defocus-triplet sequence at fixed
 pointing; unlike the closed-loop AOS blocks it does NOT feed Z4 back as a
 correction, so Z4 here is a genuine wavefront measurement. Caches to parquet."""
+
 import asyncio, os, sqlalchemy, pandas as pd, numpy as np
 from lsst_efd_client import EfdClient
 from astropy.time import Time
 
 OUT_WFE = "../data/t614_wfe.parquet"
 OUT_HEX = "../data/t614_hexapod.parquet"
+
 
 def consdb():
     PG = os.path.expanduser("~/.lsst/postgres-credentials.txt")
@@ -20,13 +22,18 @@ def consdb():
             pw = ":".join(p[4:])
     return sqlalchemy.create_engine(f"postgresql+psycopg2://{user}:{pw}@{host}/{db}")
 
+
 async def main():
     eng = consdb()
-    exp = pd.read_sql_query(sqlalchemy.text(
-        "SELECT day_obs, seq_num, exposure_id, obs_start, azimuth, altitude, "
-        "sky_rotation, science_program FROM cdb_lsstcam.exposure "
-        "WHERE science_program ILIKE 'BLOCK-T614%' "
-        "AND day_obs BETWEEN 20260311 AND 20260608 ORDER BY day_obs, seq_num"), eng.connect())
+    exp = pd.read_sql_query(
+        sqlalchemy.text(
+            "SELECT day_obs, seq_num, exposure_id, obs_start, azimuth, altitude, "
+            "sky_rotation, science_program FROM cdb_lsstcam.exposure "
+            "WHERE science_program ILIKE 'BLOCK-T614%' "
+            "AND day_obs BETWEEN 20260311 AND 20260608 ORDER BY day_obs, seq_num"
+        ),
+        eng.connect(),
+    )
     exp["obs_start"] = pd.to_datetime(exp["obs_start"], utc=True)
     nights = sorted(exp["day_obs"].unique())
     print(f"T614: {len(exp)} exposures over {len(nights)} nights")
@@ -35,25 +42,44 @@ async def main():
     wfe_all, hex_all = [], []
     for day in nights:
         g = exp[exp["day_obs"] == day].sort_values("obs_start")
-        t0 = Time(pd.Timestamp(g["obs_start"].min()).tz_convert("UTC").tz_localize(None))
-        t1 = Time(pd.Timestamp(g["obs_start"].max()).tz_convert("UTC").tz_localize(None))
+        t0 = Time(
+            pd.Timestamp(g["obs_start"].min()).tz_convert("UTC").tz_localize(None)
+        )
+        t1 = Time(
+            pd.Timestamp(g["obs_start"].max()).tz_convert("UTC").tz_localize(None)
+        )
         # WFE Z4 (all 25 Noll terms for completeness)
         nv = [f"nollZernikeValues{i}" for i in range(25)]
-        w = await c.select_time_series("lsst.sal.MTAOS.logevent_wavefrontError",
-                                       fields=["sensorId", "visitId"] + nv, start=t0, end=t1)
+        w = await c.select_time_series(
+            "lsst.sal.MTAOS.logevent_wavefrontError",
+            fields=["sensorId", "visitId"] + nv,
+            start=t0,
+            end=t1,
+        )
         if len(w):
             w["day_obs"] = day
             wfe_all.append(w.reset_index().rename(columns={"index": "ts"}))
         # hexapod focus, both indices, 2s median
         for idx in (1, 2):
-            h = await c.select_time_series("lsst.sal.MTHexapod.application",
-                    fields=["salIndex", "position2", "demand2"], start=t0, end=t1, index=idx)
+            h = await c.select_time_series(
+                "lsst.sal.MTHexapod.application",
+                fields=["salIndex", "position2", "demand2"],
+                start=t0,
+                end=t1,
+                index=idx,
+            )
             h = h[h["salIndex"] == idx]
             if len(h):
                 if h.index.tz is None:
                     h.index = h.index.tz_localize("UTC")
-                r = h[["position2", "demand2"]].resample("2s").median().dropna(how="all")
-                r["day_obs"] = day; r["salIndex"] = idx
+                r = (
+                    h[["position2", "demand2"]]
+                    .resample("2s")
+                    .median()
+                    .dropna(how="all")
+                )
+                r["day_obs"] = day
+                r["salIndex"] = idx
                 hex_all.append(r.reset_index().rename(columns={"index": "ts"}))
         print(f"  {day}: WFE={len(w)} rows")
 
@@ -67,5 +93,6 @@ async def main():
     print(f"\nSaved {len(W)} WFE rows -> {OUT_WFE}")
     print(f"sensorIds present: {sorted(W['sensorId'].unique())}")
     print(f"Z4 range: {W['z4_um'].min():.3f} to {W['z4_um'].max():.3f} µm")
+
 
 asyncio.run(main())
