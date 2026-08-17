@@ -33,8 +33,8 @@ CONSDB_HOST = "usdf-summitdb-logical-replica-svc.sdf.slac.stanford.edu"
 CONSDB_DB, CONSDB_USER, SCHEMA = "exposurelog", "usdf", "cdb_lsstcam"
 
 # Full window: literal 2026-07-01 end, 25 weeks back (matches ANCHOR_TO_LAST_DATA=False)
-t_end = Time("2026-07-01T12:00:00", scale="utc")
-t_start = t_end - TimeDelta(25 * u.week)
+t_end = Time("2026-07-14T12:00:00", scale="utc")
+t_start = Time("2026-01-07T12:00:00", scale="utc")
 day_obs_start = int(t_start.strftime("%Y%m%d"))
 day_obs_end = int(t_end.strftime("%Y%m%d"))
 

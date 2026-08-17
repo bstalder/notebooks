@@ -7,38 +7,35 @@ float64 nights on concat/save. We coerce those columns explicitly here.
 """
 import pathlib, numpy as np, pandas as pd
 
-d0, d1 = 20260107, 20260701
+d0, d1 = 20260107, 20260714
 CACHE_DIR = pathlib.Path("../data")
 NIGHT_DIR = CACHE_DIR / f"_wind_cache_nights_{d0}_{d1}"
 CACHE_FILE = CACHE_DIR / f"wind_loading_{d0}_{d1}.parquet"
 PSD_CACHE_FILE = CACHE_DIR / f"wind_loading_psd_{d0}_{d1}.parquet"
 
-# columns that must be numeric (mixed float/object across nights due to all-null nights)
-NUMERIC_COLS = [
-    "dimm_seeing",
-    "guider_altitude_drift",
-    "guider_azimuth_drift",
-    "guider_magnitude_drift",
-    "guider_altitude_rms_detrended",
-    "guider_azimuth_rms_detrended",
-    "guider_magnitude_rms_detrended",
-    "guider_focalplane_theta_drift",
-    "guider_focalplane_theta_rms_detrended",
-    "mount_motion_image_degradation",
-    "mount_motion_image_degradation_az",
-    "mount_motion_image_degradation_el",
-    "mount_motion_image_degradation_rot",
-    "mount_jitter_rms",
-    "mount_jitter_rms_az",
-    "mount_jitter_rms_el",
-    "mount_jitter_rms_rot",
-]
+# Columns that are genuinely TEXT and must never be coerced to numeric. Every OTHER
+# object-dtype column is a numeric ConsDB field that some night stored as all-null
+# ("None" strings), so it is coerced by value below rather than by name — a hardcoded
+# numeric list silently breaks the save whenever ConsDB gains a column.
+TEXT_COLS = {
+    "band",
+    "physical_filter",
+    "target_name",
+    "img_type",
+    "vignette",
+    "scheduler_note",
+    "wind_speed_bin",
+    "rel_wind_bin",
+    "night",
+    "can_see_sky",  # bool/str mix, normalized separately below
+}
 
 
 def coerce(df):
-    for c in NUMERIC_COLS:
-        if c in df:
-            df[c] = pd.to_numeric(df[c], errors="coerce")
+    for c in df.columns:
+        if c in TEXT_COLS or df[c].dtype != object:
+            continue
+        df[c] = pd.to_numeric(df[c], errors="coerce")
     if (
         "can_see_sky" in df
     ):  # bool/object mix → normalize to nullable boolean-ish string kept as str

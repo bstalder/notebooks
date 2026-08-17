@@ -25,7 +25,7 @@ from lsst_efd_client import EfdClient
 
 warnings.filterwarnings("ignore")
 
-d0, d1 = 20260107, 20260701
+d0, d1 = 20260107, 20260714
 CACHE_DIR = pathlib.Path("../data")
 MAIN = CACHE_DIR / f"wind_loading_{d0}_{d1}.parquet"
 OUT = CACHE_DIR / f"wind_loading_vms_{d0}_{d1}.parquet"
