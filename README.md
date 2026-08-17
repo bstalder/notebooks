@@ -2,6 +2,25 @@
 
 General personal development notebooks.  Currently:
 
+## Development setup
+
+Linting/formatting is handled by [pre-commit](https://pre-commit.com):
+`nbstripout` (clears notebook outputs so diffs stay reviewable and the repo
+stays small) and `black-jupyter`. CI runs the same hooks on every push.
+
+The git hook itself lives in `.git/hooks/` and is **not** version-controlled,
+so it must be installed once per clone — otherwise commits bypass the hooks
+locally and only fail later in CI:
+
+```bash
+pip install pre-commit          # or: python3 -m pip install --user pre-commit
+pre-commit install
+```
+
+Note that `nbstripout` strips outputs from committed notebooks. After running a
+notebook, `git status` will therefore show it as modified even when no code
+changed; that is expected, and the outputs are intentionally local-only.
+
 aiv - Assembly, Integration, and Verification related notebooks
 
 eotesting - raft-scale analyses and investigative processes
